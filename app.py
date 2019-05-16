@@ -14,14 +14,19 @@ from sqlalchemy import create_engine
 import yaml
 import json
 
-mapbox_access_token = 'pk.eyJ1IjoiZ2x3IiwiYSI6IjdHTVp3eWMifQ.TXIsy6c3KnbqnUAeBawVsA'
+#############
+# ENV SETUP #
+#############
+config = yaml.safe_load(open("config.yaml"))
+
+mapbox_access_token = config['MAPBOX']['TOKEN']
 
 app = dash.Dash()
 app.scripts.config.serve_locally=True
 
 PLOTLY_LOGO = "https://images.plot.ly/logo/new-branding/plotly-logomark.png"
 
-df = pd.read_csv('/media/sf_garretwais/projects/fpdcc_apps/apps/buildings/data/buildings.csv')
+df = pd.read_csv('./data/buildings/data/buildings.csv')
 
 df = df.sort_values(by=['buildings_id'])
 df_sort_sqft = df.sort_values(by=['sqft'])
@@ -209,7 +214,7 @@ body = dbc.Container(
                                             dbc.CardText(
                                                 "Electric Meter: 234SD546LKH098"
                                             ),
-                                            dbc.CardLink("Doc A", href="#"),
+                                            dbc.CardLink("Floor Plan", href="https://fpdccfilestore.nyc3.digitaloceanspaces.com/00000078.PDF"),
                                             dbc.CardLink("Doc B", href="#"),
                                         ]
                                     ),
